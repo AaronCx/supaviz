@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import {
   ReactFlow,
   Background,
@@ -11,7 +11,6 @@ import {
 import '@xyflow/react/dist/style.css'
 import { TableNode } from './TableNode'
 import { DiagramToolbar } from './DiagramToolbar'
-import { useEffect } from 'react'
 
 const nodeTypes = { tableNode: TableNode }
 
@@ -23,7 +22,7 @@ interface DiagramCanvasProps {
 export function DiagramCanvas({ initialNodes, initialEdges }: DiagramCanvasProps) {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges)
-  const [showMinimap, setShowMinimap] = useState(true)
+  const [showMinimap, setShowMinimap] = useState(() => window.innerWidth >= 768)
 
   useEffect(() => {
     setNodes(initialNodes)
@@ -33,7 +32,7 @@ export function DiagramCanvas({ initialNodes, initialEdges }: DiagramCanvasProps
   const toggleMinimap = useCallback(() => setShowMinimap((v) => !v), [])
 
   return (
-    <div className="relative w-full h-full" id="diagram-canvas">
+    <div className="relative w-full h-full min-h-0" id="diagram-canvas">
       <DiagramToolbar showMinimap={showMinimap} onToggleMinimap={toggleMinimap} />
       <ReactFlow
         nodes={nodes}
@@ -42,9 +41,10 @@ export function DiagramCanvas({ initialNodes, initialEdges }: DiagramCanvasProps
         onEdgesChange={onEdgesChange}
         nodeTypes={nodeTypes}
         fitView
-        fitViewOptions={{ padding: 0.2 }}
+        fitViewOptions={{ padding: 0.15 }}
         proOptions={{ hideAttribution: true }}
         className="bg-gray-950"
+        minZoom={0.1}
       >
         <Background color="#1e2228" gap={20} />
         {showMinimap && (
@@ -56,10 +56,10 @@ export function DiagramCanvas({ initialNodes, initialEdges }: DiagramCanvasProps
         )}
       </ReactFlow>
       {nodes.length === 0 && (
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none px-4">
           <div className="text-center text-gray-600">
-            <p className="text-lg font-medium">No schema loaded</p>
-            <p className="text-sm mt-1">Paste SQL or load an example to get started</p>
+            <p className="text-base sm:text-lg font-medium">No schema loaded</p>
+            <p className="text-xs sm:text-sm mt-1">Paste SQL or load an example to get started</p>
           </div>
         </div>
       )}

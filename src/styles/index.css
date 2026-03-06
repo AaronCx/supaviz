@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+html, body, #root {
+  height: 100%;
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
 .react-flow__node {
   border: none !important;
   box-shadow: none !important;
@@ -22,8 +28,15 @@
   font-size: 14px !important;
 }
 
+@media (max-width: 640px) {
+  .cm-editor {
+    font-size: 12px !important;
+  }
+}
+
 .cm-editor .cm-scroller {
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .resize-handle {
@@ -34,4 +47,14 @@
 
 .resize-handle:hover {
   background: #3ECF8E;
+}
+
+/* Prevent iOS zoom on double-tap */
+button, input, select, textarea {
+  touch-action: manipulation;
+}
+
+/* React Flow touch improvements */
+.react-flow__pane {
+  touch-action: none;
 }

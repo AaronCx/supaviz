@@ -11,15 +11,15 @@ export function DiagramToolbar({ showMinimap, onToggleMinimap }: DiagramToolbarP
   const { fitView, zoomIn, zoomOut } = useReactFlow()
 
   return (
-    <div className="absolute top-3 right-3 z-10 flex items-center gap-1.5 bg-gray-900/90 border border-gray-700 rounded-lg p-1.5 backdrop-blur">
+    <div className="absolute top-2 right-2 sm:top-3 sm:right-3 z-10 flex items-center gap-1 sm:gap-1.5 bg-gray-900/90 border border-gray-700 rounded-lg p-1 sm:p-1.5 backdrop-blur">
       <Button size="sm" variant="ghost" onClick={() => fitView({ padding: 0.2 })}>Fit</Button>
       <Button size="sm" variant="ghost" onClick={() => zoomIn()}>+</Button>
       <Button size="sm" variant="ghost" onClick={() => zoomOut()}>-</Button>
-      <div className="w-px h-5 bg-gray-700" />
+      <div className="w-px h-4 bg-gray-700" />
       <Button size="sm" variant="ghost" onClick={() => exportAsPNG('diagram-canvas')}>PNG</Button>
-      <Button size="sm" variant="ghost" onClick={() => exportAsSVG('diagram-canvas')}>SVG</Button>
-      <div className="w-px h-5 bg-gray-700" />
-      <Button size="sm" variant="ghost" onClick={onToggleMinimap}>
+      <Button size="sm" variant="ghost" className="hidden sm:inline-flex" onClick={() => exportAsSVG('diagram-canvas')}>SVG</Button>
+      <div className="w-px h-4 bg-gray-700 hidden sm:block" />
+      <Button size="sm" variant="ghost" className="hidden sm:inline-flex" onClick={onToggleMinimap}>
         {showMinimap ? 'Hide Map' : 'Map'}
       </Button>
     </div>

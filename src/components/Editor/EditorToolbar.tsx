@@ -22,13 +22,13 @@ export function EditorToolbar({ onLoadExample, onClear, onFormat, onCopy }: Edit
   }, [])
 
   return (
-    <div className="flex items-center gap-2 px-3 py-2 border-b border-gray-800 bg-gray-900/50">
-      <div className="relative" ref={ref}>
+    <div className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-2 border-b border-gray-800 bg-gray-900/50 overflow-x-auto shrink-0">
+      <div className="relative shrink-0" ref={ref}>
         <Button size="sm" onClick={() => setOpen(!open)}>
-          Load Example &#x25BE;
+          Examples &#x25BE;
         </Button>
         {open && (
-          <div className="absolute top-full left-0 mt-1 z-50 bg-gray-800 border border-gray-700 rounded-lg shadow-lg overflow-hidden min-w-[160px]">
+          <div className="absolute top-full left-0 mt-1 z-50 bg-gray-800 border border-gray-700 rounded-lg shadow-lg overflow-hidden min-w-[140px]">
             {(Object.keys(examples) as ExampleKey[]).map((key) => (
               <button
                 key={key}
@@ -44,9 +44,9 @@ export function EditorToolbar({ onLoadExample, onClear, onFormat, onCopy }: Edit
           </div>
         )}
       </div>
-      <Button size="sm" onClick={onClear}>Clear</Button>
-      <Button size="sm" onClick={onFormat}>Format</Button>
-      <Button size="sm" onClick={onCopy}>Copy SQL</Button>
+      <Button size="sm" onClick={onClear} className="shrink-0">Clear</Button>
+      <Button size="sm" onClick={onFormat} className="shrink-0 hidden sm:inline-flex">Format</Button>
+      <Button size="sm" onClick={onCopy} className="shrink-0 hidden sm:inline-flex">Copy</Button>
     </div>
   )
 }
